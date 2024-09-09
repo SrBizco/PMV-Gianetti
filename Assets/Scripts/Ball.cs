@@ -25,8 +25,14 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Goal"))
+        if (other.CompareTag("Goal1"))
         {
+            gm.OnGoalScoredP1();
+            gm.ResetBall();
+        }
+        else if (other.CompareTag("Goal2"))
+        {
+            gm.OnGoalScoredP2();
             gm.ResetBall();
         }
         else if (other.CompareTag("PowerUpSize") || other.CompareTag("PowerUpSpeed"))

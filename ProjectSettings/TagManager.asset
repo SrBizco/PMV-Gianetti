@@ -8,6 +8,8 @@ TagManager:
   - Ball
   - PowerUpSize
   - PowerUpSpeed
+  - Goal1
+  - Goal2
   layers:
   - Default
   - TransparentFX

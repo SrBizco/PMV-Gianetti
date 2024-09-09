@@ -28,8 +28,14 @@ public class UI : MonoBehaviour
     [SerializeField] private Button ChangePlayer1ColorButton;
     [SerializeField] private Button ChangePlayer2ColorButton;
 
+    [SerializeField] private Text player1ScoreText;
+    [SerializeField] private Text player2ScoreText;
+
     private PlayerController player1Movement;
     private PlayerController player2Movement;
+
+    private int player1Score = 0;
+    private int player2Score = 0; 
 
     private void Awake()
     {
@@ -199,5 +205,18 @@ public class UI : MonoBehaviour
                 renderer.material.color = Random.ColorHSV();
             }
         }
+    }
+    public void UpdatePlayer1Score()
+    {
+        Debug.Log("Player 1 Score Updated: " + player1Score);
+        player1Score += 1;
+        player1ScoreText.text = player1Score.ToString();
+    }
+
+    public void UpdatePlayer2Score()
+    {
+        Debug.Log("Player 1 Score Updated: " + player1Score);
+        player2Score += 1;
+        player2ScoreText.text = player2Score.ToString();
     }
 }

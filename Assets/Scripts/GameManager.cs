@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector2 initialforce = new Vector2(5, 0);
     [SerializeField] private PlayerController player1;
     [SerializeField] private PlayerController player2;
+    [SerializeField] private UI uiManager;
 
     private void Update()
     {
@@ -42,12 +43,12 @@ public class GameManager : MonoBehaviour
             ball.rb.velocity *= 1.5f; 
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnGoalScoredP1()
     {
-        if (other == goal1 || other == goal2)
-        {
-            ResetBall();
-        }
+       uiManager.UpdatePlayer1Score();
+    }
+    public void OnGoalScoredP2()
+    {
+        uiManager.UpdatePlayer2Score();
     }
 }
