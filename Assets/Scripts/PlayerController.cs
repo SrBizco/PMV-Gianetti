@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;  // Velocidad de movimiento del jugador
+    public float speed = 5f;  
    
-    [SerializeField] private KeyCode upKey;     // Tecla para moverse hacia arriba
-    [SerializeField] private KeyCode downKey;   // Tecla para moverse hacia abajo
+    [SerializeField] private KeyCode upKey;     
+    [SerializeField] private KeyCode downKey;   
 
     private Rigidbody2D rb;
+    public float sizeIncrease = 1.5f;
+    public float speedIncrease = 2f;
 
     void Awake()
     {
@@ -19,7 +21,7 @@ public class PlayerController : MonoBehaviour
         Move();
     }
     private void Move()
-    {   // Maneja el input del jugador basado en las teclas asignadas
+    {   
         if (Input.GetKey(upKey))
         {
             rb.AddForce(Vector3.up * speed * Time.deltaTime, ForceMode2D.Impulse);
@@ -28,5 +30,14 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.down * speed * Time.deltaTime, ForceMode2D.Impulse);
         }
+    }
+    public void IncreaseSize()
+    {
+        transform.localScale *= sizeIncrease;
+    }
+
+    public void IncreaseSpeed()
+    {
+        speed *= speedIncrease;
     }
 }

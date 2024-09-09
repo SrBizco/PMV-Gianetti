@@ -19,11 +19,14 @@ public class UI : MonoBehaviour
     [SerializeField] private Slider player1SpeedSlider;
     [SerializeField] private Slider player2SpeedSlider;
 
-    [SerializeField] private Slider player1ScaleSlider; // Slider para la escala del jugador 1
-    [SerializeField] private Slider player2ScaleSlider; // Slider para la escala del jugador 2
+    [SerializeField] private Slider player1ScaleSlider;
+    [SerializeField] private Slider player2ScaleSlider;
 
     [SerializeField] private Text player1SpeedText;
     [SerializeField] private Text player2SpeedText;
+
+    [SerializeField] private Button ChangePlayer1ColorButton;
+    [SerializeField] private Button ChangePlayer2ColorButton;
 
     private PlayerController player1Movement;
     private PlayerController player2Movement;
@@ -36,8 +39,8 @@ public class UI : MonoBehaviour
         player1SpeedSlider.onValueChanged.AddListener(UpdatePlayer1Speed);
         player2SpeedSlider.onValueChanged.AddListener(UpdatePlayer2Speed);
 
-        player1ScaleSlider.onValueChanged.AddListener(UpdatePlayer1Scale); // Añadido
-        player2ScaleSlider.onValueChanged.AddListener(UpdatePlayer2Scale); // Añadido
+        player1ScaleSlider.onValueChanged.AddListener(UpdatePlayer1Scale);
+        player2ScaleSlider.onValueChanged.AddListener(UpdatePlayer2Scale);
 
         PlayButton.onClick.AddListener(OnPlayButtonClicked);
         SettingsButton.onClick.AddListener(OnSettingsButtonClicked);
@@ -46,18 +49,29 @@ public class UI : MonoBehaviour
         BackFromCreditsButton.onClick.AddListener(BackToPauseMenu);
         ExitButton.onClick.AddListener(OnExitButtonClicked);
 
+        ChangePlayer1ColorButton.onClick.AddListener(ChangePlayer1Color);
+        ChangePlayer2ColorButton.onClick.AddListener(ChangePlayer2Color);
+
         PausePanel.SetActive(false);
         SettingsPanel.SetActive(false);
         CreditsPanel.SetActive(false);
+        
+        player1SpeedSlider.minValue = 50f;
+        player1SpeedSlider.maxValue = 200f;
+        player1SpeedSlider.value = 100f;
 
-        // Inicializar sliders de escala
-        player1ScaleSlider.minValue = 0.5f;  // Valor mínimo de escala
-        player1ScaleSlider.maxValue = 2.0f;  // Valor máximo de escala
-        player1ScaleSlider.value = 1.0f;     // Valor por defecto
+        player2SpeedSlider.minValue = 50f;
+        player2SpeedSlider.maxValue = 200f;
+        player2SpeedSlider.value = 100f;
 
-        player2ScaleSlider.minValue = 0.5f;  // Valor mínimo de escala
-        player2ScaleSlider.maxValue = 2.0f;  // Valor máximo de escala
-        player2ScaleSlider.value = 1.0f;     // Valor por defecto
+
+        player1ScaleSlider.minValue = 0.5f;
+        player1ScaleSlider.maxValue = 2.0f;
+        player1ScaleSlider.value = 1.0f;
+
+        player2ScaleSlider.minValue = 0.5f;
+        player2ScaleSlider.maxValue = 2.0f;
+        player2ScaleSlider.value = 1.0f;
     }
 
     private void Update()
@@ -67,8 +81,13 @@ public class UI : MonoBehaviour
             if (!PausePanel.activeSelf)
             {
                 PausePanel.SetActive(true);
+                Time.timeScale = 0f;
             }
-            Debug.Log("se apreto la tecla menu");
+            else
+            {
+                PausePanel.SetActive(false);
+                Time.timeScale = 1f;
+            }
         }
     }
 
@@ -78,6 +97,7 @@ public class UI : MonoBehaviour
         {
             PausePanel.SetActive(false);
             Debug.Log("OnPlayButtonClicked");
+            Time.timeScale = 1f;
         }
     }
 
@@ -87,6 +107,7 @@ public class UI : MonoBehaviour
         {
             PausePanel.SetActive(false);
             SettingsPanel.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 
@@ -96,6 +117,7 @@ public class UI : MonoBehaviour
         {
             PausePanel.SetActive(false);
             CreditsPanel.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 
@@ -126,7 +148,7 @@ public class UI : MonoBehaviour
         }
     }
 
-    // Nueva función para actualizar la escala del jugador 1
+
     public void UpdatePlayer1Scale(float newScale)
     {
         if (player1 != null)
@@ -135,7 +157,7 @@ public class UI : MonoBehaviour
         }
     }
 
-    // Nueva función para actualizar la escala del jugador 2
+
     public void UpdatePlayer2Scale(float newScale)
     {
         if (player2 != null)
@@ -144,6 +166,7 @@ public class UI : MonoBehaviour
         }
     }
 
+
     public void BackToPauseMenu()
     {
         if (SettingsPanel != null && CreditsPanel != null && PausePanel != null)
@@ -151,6 +174,30 @@ public class UI : MonoBehaviour
             SettingsPanel.SetActive(false);
             CreditsPanel.SetActive(false);
             PausePanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
+    }
+    private void ChangePlayer1Color()
+    {
+        if (player1 != null)
+        {
+            Renderer renderer = player1.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material.color = Random.ColorHSV();
+            }
+        }
+    }
+
+    private void ChangePlayer2Color()
+    {
+        if (player2 != null)
+        {
+            Renderer renderer = player2.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material.color = Random.ColorHSV();
+            }
         }
     }
 }
